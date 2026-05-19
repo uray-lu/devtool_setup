@@ -1,0 +1,131 @@
+# =============================================================
+# Starship — based on the official `plain-text-symbols` preset
+# (https://starship.rs/presets/plain-text-symbols.html)
+# with Tokyo Night palette, single-line, time + cmd duration on the right.
+# Backup of previous config: ~/.config/starship.toml.bak2
+# =============================================================
+
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# ---- Root-level layout (must come before any [section]) ----------------------
+palette = "tokyonight"
+add_newline = true
+
+# Single line. Order: user → dir → git → langs → cloud/infra → character
+format = """\
+$username\
+$directory\
+$git_branch\
+$git_status\
+$nodejs\
+$python\
+$golang\
+$rust\
+$kubernetes\
+$aws\
+$docker_context\
+$character"""
+
+# Right side: how long the last command took, then current time.
+right_format = """$cmd_duration$time"""
+
+continuation_prompt = "[.](bright-black) "
+
+# ---- Tokyo Night palette -----------------------------------------------------
+[palettes.tokyonight]
+red    = "#f7768e"
+orange = "#ff9e64"
+yellow = "#e0af68"
+green  = "#9ece6a"
+cyan   = "#7dcfff"
+blue   = "#7aa2f7"
+purple = "#bb9af7"
+white  = "#c0caf5"
+gray   = "#565f89"
+
+# ---- From the plain-text-symbols preset (trimmed to modules you'll see) -----
+[character]
+success_symbol = "[>](bold green)"
+error_symbol   = "[x](bold red)"
+
+[directory]
+read_only = " ro"
+
+[git_branch]
+symbol = "git "
+
+[git_status]
+ahead    = ">"
+behind   = "<"
+diverged = "<>"
+renamed  = "r"
+deleted  = "x"
+
+[hostname]
+ssh_symbol = "ssh "
+
+[aws]
+symbol = "aws "
+
+[docker_context]
+symbol = "docker "
+
+[golang]
+symbol = "go "
+
+[nodejs]
+symbol = "nodejs "
+
+[python]
+symbol = "py "
+
+[rust]
+symbol = "rs "
+
+[status]
+symbol = "[x](bold red) "
+
+[sudo]
+symbol = "sudo "
+
+[jobs]
+symbol = "*"
+
+# ---- Your additions on top of the preset ------------------------------------
+[username]
+show_always = true
+style_user  = "bold yellow"
+style_root  = "bold red"
+format      = "[$user]($style) "
+
+# Kubernetes — enable + only show in real k8s dirs + shorten long ARNs
+[kubernetes]
+disabled       = false
+symbol         = "k8s "
+style          = "bold cyan"
+format         = '[$symbol$context( \($namespace\))]($style) '
+detect_files   = ["Chart.yaml", "skaffold.yaml", "kustomization.yaml", "Tiltfile"]
+detect_folders = ["k8s", "helm", "kubernetes"]
+
+[[kubernetes.contexts]]
+context_pattern = "arn:aws:eks:.*:cluster/(?P<cluster>.+)"
+context_alias   = "$cluster"
+
+[[kubernetes.contexts]]
+context_pattern = "gke_.*_(?P<cluster>[\\w-]+)"
+context_alias   = "$cluster"
+
+# Time on the right edge
+[time]
+disabled    = false
+time_format = "%H:%M"
+style       = "bold gray"
+format      = "[$time]($style)"
+
+# How long the last command took. min_time = 500 → show for anything ≥0.5s.
+# Set to 0 to show for every command (noisy), or 2000 to only show slow ones.
+[cmd_duration]
+min_time           = 500
+show_milliseconds  = false
+style              = "bold yellow"
+format             = "[took $duration]($style) "
