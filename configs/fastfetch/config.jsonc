@@ -1,42 +1,131 @@
-// Fastfetch config — custom "R" logo + sensible info modules.
-// Docs: https://github.com/fastfetch-cli/fastfetch/wiki
+// Fastfetch — sectioned layout, left-bar frame, rainbow palette.
+// Section headers + the connecting "│" bar use \u001b escapes for ANSI truecolor.
+// Tokyo Night palette is used to match your Starship prompt.
+// Logo: figlet "isometric1" font (R, 3D ASCII), 2x diagonal-aware scale.
+// Regen: figlet -f isometric1 "R" piped through a 2x scaler that maps
+//   / → ' /' over '/ ', \ → '\\ ' over ' \\', _ → '  '/'__', | → '||'/'||',
+//   : → '::'/'::', ~ → '~~'/'  ', space → '  '/'  '.
 {
   "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/master/doc/json_schema.json",
-
-  // The big "R" lives in r-logo.txt. "type": "file" prints it as-is.
-  // Want a different color? Change "color.1" to any ANSI color name or hex.
-  // Want a different font? Re-run: figlet -f <font> "R" > ~/.config/fastfetch/r-logo.txt
   "logo": {
     "type": "file",
     "source": "~/.config/fastfetch/r-logo.txt",
-    "color": { "1": "magenta" },
-    "padding": { "top": 1, "right": 3 }
+    "color": {
+      "1": "magenta"
+    },
+    "padding": {
+      "top": 1,
+      "right": 3
+    }
   },
-
-  // Each entry is one row of info. Remove what you don't care about,
-  // add from `fastfetch --list-modules` for more options.
-  // Full default module list restored so you can pick what to keep.
-  // Delete any line you don't want. See `fastfetch --list-modules` for ~100 more.
   "modules": [
     "title",
-    "datetime",
     "separator",
-    "os",
-    "host",
-    "kernel",
-    "uptime",
-    "shell",
-    "terminal",
-    "cpu",
-    "memory",
-    "swap",
-    "disk",
-    "battery",
-    "poweradapter",
+    {
+      "type": "custom",
+      "format": "\u001b[1;38;2;187;154;247m│ ── System ──────────────────────\u001b[0m"
+    },
+    {
+      "type": "os",
+      "key": "│ OS"
+    },
+    {
+      "type": "host",
+      "key": "│ Host"
+    },
+    {
+      "type": "kernel",
+      "key": "│ Kernel"
+    },
+    {
+      "type": "uptime",
+      "key": "│ Uptime"
+    },
+    {
+      "type": "custom",
+      "format": "\u001b[38;2;86;95;137m│\u001b[0m"
+    },
+    {
+      "type": "custom",
+      "format": "\u001b[1;38;2;125;207;255m│ ── Software ────────────────────\u001b[0m"
+    },
+    {
+      "type": "packages",
+      "key": "│ Packages"
+    },
+    {
+      "type": "shell",
+      "key": "│ Shell"
+    },
+    {
+      "type": "terminal",
+      "key": "│ Terminal"
+    },
+    {
+      "type": "terminalfont",
+      "key": "│ Terminal Font"
+    },
+    {
+      "type": "custom",
+      "format": "\u001b[38;2;86;95;137m│\u001b[0m"
+    },
+    {
+      "type": "custom",
+      "format": "\u001b[1;38;2;158;206;106m│ ── Hardware ────────────────────\u001b[0m"
+    },
+    {
+      "type": "cpu",
+      "key": "│ CPU"
+    },
+    {
+      "type": "memory",
+      "key": "│ Memory"
+    },
+    {
+      "type": "swap",
+      "key": "│ Swap"
+    },
+    {
+      "type": "disk",
+      "key": "│ Disk"
+    },
+    {
+      "type": "custom",
+      "format": "\u001b[38;2;86;95;137m│\u001b[0m"
+    },
+    {
+      "type": "custom",
+      "format": "\u001b[1;38;2;224;175;104m│ ── Power ───────────────────────\u001b[0m"
+    },
+    {
+      "type": "battery",
+      "key": "│ Battery"
+    },
+    {
+      "type": "poweradapter",
+      "key": "│ Power Adapter"
+    },
+    {
+      "type": "custom",
+      "format": "\u001b[38;2;86;95;137m│\u001b[0m"
+    },
+    {
+      "type": "custom",
+      "format": "\u001b[1;38;2;247;118;142m│ ── Now ─────────────────────────\u001b[0m"
+    },
+    {
+      "type": "datetime",
+      "key": "│ Date & Time"
+    },
     {
       "type": "command",
-      "key": "Weather",
+      "key": "│ Weather",
       "text": "curl -s --max-time 3 'wttr.in/?format=4' || echo 'unavailable'"
-    }
+    },
+    {
+      "type": "custom",
+      "format": "\u001b[38;2;86;95;137m│\u001b[0m"
+    },
+    "colors"
   ]
 }

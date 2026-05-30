@@ -29,12 +29,15 @@ require("lazy").setup({
   -- Treesitter: precise syntax highlighting
   {
     "nvim-treesitter/nvim-treesitter",
-    branch = "master",
+    branch = "main",
     build = ":TSUpdate",
+    lazy = false,
     config = function()
-      require("nvim-treesitter.configs").setup({
-        ensure_installed = { "lua", "python", "javascript", "typescript", "html", "css", "json", "bash" },
-        highlight = { enable = true },
+      require("nvim-treesitter").install({
+        "lua", "python", "javascript", "typescript", "html", "css", "json", "bash",
+      })
+      vim.api.nvim_create_autocmd("FileType", {
+        callback = function(ev) pcall(vim.treesitter.start, ev.buf) end,
       })
     end,
   },
