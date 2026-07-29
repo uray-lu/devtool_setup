@@ -14,3 +14,12 @@
 [url "git@github.com-emu:trend-ctcs/"]
 	insteadOf = https://github.com/trend-ctcs/
 	insteadOf = git@github.com:trend-ctcs/
+[credential "https://github.com"]
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential
+[credential "https://adc.github.trendmicro.com"]
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential

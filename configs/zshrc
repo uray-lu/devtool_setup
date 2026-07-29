@@ -24,13 +24,6 @@ export PATH="$HOME/bin:$HOME/go/bin:$HOME/.local/bin:/opt/homebrew/bin:$PATH"
 
 export GOPRIVATE='github.com/trend-ctcs/*'
 
-# Start ssh-agent once per login, load keys
-if ! ssh-add -l &>/dev/null; then
-  eval "$(ssh-agent -s)" >/dev/null
-  ssh-add ~/.ssh/adcgithub 2>/dev/null
-  ssh-add ~/.ssh/id_rsa_personal 2>/dev/null
-fi
-
 # Land in workspace on new shells (skip when sub-shells / scripts)
 [[ -o interactive && -z "$IN_NESTED_SHELL" ]] && cd ~/Workspace
 
