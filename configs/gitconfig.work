@@ -1,0 +1,10 @@
+# Work-machine only (Trend Micro). Pulled in by ~/.gitconfig.local when
+# apply-configs.sh was answered "work machine". Do NOT include on a personal
+# machine: the rewrite below needs the `github.com-emu` host alias from the
+# work ~/.ssh/config, and would silently break trend-ctcs clones without it.
+[url "git@github.com-emu:trend-ctcs/"]
+	insteadOf = https://github.com/trend-ctcs/
+	insteadOf = git@github.com:trend-ctcs/
+[credential "https://adc.github.trendmicro.com"]
+	helper =
+	helper = !/opt/homebrew/bin/gh auth git-credential

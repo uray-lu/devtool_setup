@@ -1,0 +1,3 @@
+# Work-machine only (Trend Micro). Sourced by ~/.zshrc.local when
+# apply-configs.sh was answered "work machine".
+export GOPRIVATE='github.com/trend-ctcs/*'

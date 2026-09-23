@@ -7,6 +7,21 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CFG="$SCRIPT_DIR/configs"
 
+# Identity belongs in ~/.gitconfig.local, not ~/.gitconfig — otherwise snapshot
+# commits one machine's name/email and apply-configs.sh pushes it onto the other.
+# A stray `git config --global user.email ...` is the usual way this regresses.
+if grep -qE '^\[user\]' "$HOME/.gitconfig"; then
+  cat >&2 <<EOF
+ERROR: ~/.gitconfig has a [user] section. Snapshotting it would commit this
+       machine's identity to the repo.
+
+  Move it to ~/.gitconfig.local, then remove it from ~/.gitconfig:
+    git config --global --unset user.name
+    git config --global --unset user.email
+EOF
+  exit 1
+fi
+
 echo "==> Snapshotting current configs"
 mkdir -p "$CFG/nvim" "$CFG/ghostty" "$CFG/fastfetch"
 cp "$HOME/.zshrc"                       "$CFG/zshrc"
