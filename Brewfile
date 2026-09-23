@@ -44,6 +44,8 @@ brew "node"
 brew "openapi-generator"
 # Apache Parquet command-line tools and utilities
 brew "parquet-cli"
+# PDF rendering library (based on the xpdf-3.0 code base)
+brew "poppler"
 # Interpreted, interactive, object-oriented programming language
 brew "python@3.9"
 # Persistent key-value database, with built-in net interface
@@ -81,6 +83,7 @@ cask "postman"
 cask "session-manager-plugin"
 # Open-source code editor
 cask "visual-studio-code"
+vscode "4ops.terraform"
 vscode "akamud.vscode-theme-onedark"
 vscode "astro-build.astro-vscode"
 vscode "benjaminbenais.copilot-theme"
