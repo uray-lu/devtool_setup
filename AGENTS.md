@@ -11,11 +11,14 @@ Personal dotfiles plus three scripts:
 | Script | Does |
 | --- | --- |
 | `install.sh` | Homebrew, Brewfile apps, oh-my-zsh, zsh plugins |
-| `apply-configs.sh` | writes `configs/` into `~` and `~/.config`, generates per-machine identity |
+| `apply-configs.sh` | writes `configs/` into `~`, `~/.config` and `~/.claude`, generates per-machine identity |
 | `snapshot.sh` | reverse: pulls the live system state back into `configs/` |
 
 Nothing machine-specific is tracked. Git identity and work-only settings are
 generated into `~/.gitconfig.local` and `~/.zshrc.local`, which are untracked.
+The one exception is `configs/claude/settings.json`, which carries the Trend
+Micro AI endpoint and is applied on every machine; its auth token is not
+tracked.
 
 ## Stop and ask the user
 
@@ -32,6 +35,9 @@ prevent — a wrong answer means commits authored under the wrong identity, or
 Never generate SSH keys, edit `~/.ssh/config`, or run `gh auth login` on the
 user's behalf without asking — these are credential operations and at least one
 is interactive.
+
+Never ask for the Claude Code auth token or put it in a file yourself. The user
+pastes it into `~/.claude/settings.json`.
 
 ## Setup sequence
 
@@ -51,6 +57,8 @@ bash install.sh
 # 5. apply configs, non-interactively
 GIT_NAME="<asked>" GIT_EMAIL="<asked>" MACHINE=work|personal \
   bash apply-configs.sh
+
+# 6. Claude Code auth token      -> the user pastes it, see README
 ```
 
 `apply-configs.sh` prompts when run bare. All three environment variables must
@@ -92,3 +100,9 @@ env -u GOPRIVATE zsh -ic 'echo $GOPRIVATE'
 - **The work URL rewrite depends on the `github.com-emu` host alias** in
   `~/.ssh/config`. Applying `MACHINE=work` without that block gives clone
   failures against a host SSH cannot resolve.
+- **`configs/claude/settings.json` must only ever hold `REPLACE_WITH_YOUR_TOKEN`**
+  as `ANTHROPIC_AUTH_TOKEN`. `snapshot.sh` swaps the live token for it; copying
+  `~/.claude/settings.json` into `configs/` any other way commits the real token.
+  `apply-configs.sh` treats the placeholder as "no token yet" and otherwise keeps
+  the token already in `~/.claude/settings.json`. The string appears in both
+  scripts; change them together.

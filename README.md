@@ -19,7 +19,8 @@ tool_setup/
     ├── starship.toml     # → ~/.config/starship.toml
     ├── nvim/init.lua     # → ~/.config/nvim/init.lua
     ├── ghostty/config    # → ~/.config/ghostty/config
-    └── fastfetch/        # → ~/.config/fastfetch/
+    ├── fastfetch/        # → ~/.config/fastfetch/
+    └── claude/           # → ~/.claude/ (settings.json, statusline-command.sh)
 ```
 
 ## Per-machine settings
@@ -52,10 +53,17 @@ helper, and `GOPRIVATE`. The URL rewrite depends on the `github.com-emu` host
 alias in the work `~/.ssh/config`; applying it on a personal machine would
 silently break `trend-ctcs` clones, which is why it is opt-in per machine.
 
+`configs/claude/settings.json` is the exception: it is applied on every machine
+and points Claude Code at the Trend Micro AI endpoint. Its auth token is
+replaced with `REPLACE_WITH_YOUR_TOKEN` by `snapshot.sh`. `apply-configs.sh`
+keeps the token already in `~/.claude/settings.json`, so re-runs don't wipe it;
+on a fresh machine you paste it in once (step 6 below).
+
 ## On a new laptop
 
-Three things live outside this repo and have to be done by hand: **SSH keys**,
-`~/.ssh/config`, and `gh` auth. Everything else is scripted.
+These live outside this repo and have to be done by hand: **SSH keys**,
+`~/.ssh/config`, `gh` auth, and for Claude Code the auth token, the Atlassian
+MCP server, and the `smith` repo. Everything else is scripted.
 
 **1. Clone over HTTPS.** The `origin` remote is SSH, but a fresh machine has no
 keys yet, so an SSH clone fails. (macOS prompts to install the Xcode command
@@ -120,7 +128,24 @@ a work machine. Answer **n** on a personal machine.
 bash apply-configs.sh
 ```
 
-**6. Verify.**
+**6. Claude Code.** Replace `REPLACE_WITH_YOUR_TOKEN` in
+`~/.claude/settings.json` with your auth token, then re-add the Atlassian MCP
+server (it lives in `~/.claude.json`, which is not tracked) and run `/mcp`
+inside Claude Code to log in:
+
+```sh
+claude mcp add --scope user --transport http atlassian https://mcp.atlassian.com/v2/mcp
+```
+
+Plugins and marketplaces are listed in `settings.json`; if any are missing on
+first start, install them from `/plugin`.
+
+`CLAUDE.md`, skills, and agents come from the separate `smith` repo: clone it
+to `~/smith` and run `bash ~/smith/setup.sh`. The status line command in
+`settings.json` hardcodes `/Users/ray_lu`, so it needs editing if the new
+account has a different username.
+
+**7. Verify.**
 
 ```sh
 git var GIT_AUTHOR_IDENT                                  # this machine's identity

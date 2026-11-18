@@ -23,6 +23,22 @@ backup_and_copy() {
   echo "  wrote $dst"
 }
 
+# The tracked settings.json carries a placeholder instead of the auth token (see
+# snapshot.sh). Carry this machine's token over so re-runs don't wipe it; on a
+# fresh machine the placeholder stays and the user pastes the token in by hand.
+apply_claude_settings() {
+  local src="$CFG/claude/settings.json" dst="$HOME/.claude/settings.json" token=""
+  [[ -f "$dst" ]] && token="$(jq -r '.env.ANTHROPIC_AUTH_TOKEN // empty' "$dst")"
+  backup_and_copy "$src" "$dst"
+  if [[ -n "$token" && "$token" != "REPLACE_WITH_YOUR_TOKEN" ]]; then
+    # Via the environment, not --arg, so the token never shows up in `ps`.
+    TOKEN="$token" jq '.env.ANTHROPIC_AUTH_TOKEN = env.TOKEN' "$src" > "$dst"
+    echo "  kept ANTHROPIC_AUTH_TOKEN from the previous $dst"
+  else
+    echo "  NOTE: replace REPLACE_WITH_YOUR_TOKEN in $dst with your auth token"
+  fi
+}
+
 # Resolve this machine's git identity and whether it's a work machine, then write
 # ~/.gitconfig.local + ~/.zshrc.local. Both are untracked and per-machine, so the
 # repo never carries one laptop's identity onto another.
@@ -107,5 +123,7 @@ backup_and_copy "$CFG/starship.toml"            "$HOME/.config/starship.toml"
 backup_and_copy "$CFG/fastfetch/config.jsonc"   "$HOME/.config/fastfetch/config.jsonc"
 backup_and_copy "$CFG/fastfetch/r-logo.txt"     "$HOME/.config/fastfetch/r-logo.txt"
 backup_and_copy "$CFG/git_global_ignore"        "$HOME/.config/git/ignore"
+backup_and_copy "$CFG/claude/statusline-command.sh" "$HOME/.claude/statusline-command.sh"
+apply_claude_settings
 
 echo "==> Done. Open a new terminal so .zshrc takes effect."

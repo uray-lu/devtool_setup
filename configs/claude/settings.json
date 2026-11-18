@@ -1,0 +1,66 @@
+{
+  "env": {
+    "DISABLE_NON_ESSENTIAL_MODEL_CALLS": "1",
+    "DISABLE_TELEMETRY": "1",
+    "ANTHROPIC_BASE_URL": "https://api.rdsec.trendmicro.com/prod/aiendpoint/",
+    "ANTHROPIC_AUTH_TOKEN": "REPLACE_WITH_YOUR_TOKEN",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "claude-5-opus-anthropic",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "claude-5-sonnet-anthropic",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "claude-haiku-4-5",
+    "CLAUDE_CODE_SUBAGENT_MODEL": "claude-5-sonnet-anthropic",
+    "DISABLE_COST_WARNINGS": "1",
+    "CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS": "1",
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
+    "DISABLE_AUTOUPDATER": "1"
+  },
+  "permissions": {
+    "defaultMode": "bypassPermissions"
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "bash /Users/ray_lu/.claude/statusline-command.sh"
+  },
+  "enabledPlugins": {
+    "skill-creator@claude-plugins-official": true,
+    "gopls-lsp@claude-plugins-official": true,
+    "pyright-lsp@claude-plugins-official": true,
+    "commit-commands@claude-plugins-official": true,
+    "claude-md-management@claude-plugins-official": true,
+    "coaching-tools@ai-skill-marketplace": true,
+    "typesafe@typesafe-ai": true,
+    "caveman@caveman": true
+  },
+  "extraKnownMarketplaces": {
+    "ai-skill-marketplace": {
+      "source": {
+        "source": "github",
+        "repo": "trend-ai-taskforce/ai-skill-marketplace"
+      }
+    },
+    "jev": {
+      "source": {
+        "source": "github",
+        "repo": "Gilbert09/jev-cli"
+      }
+    },
+    "typesafe-ai": {
+      "source": {
+        "source": "github",
+        "repo": "typesafe-ai/skills"
+      }
+    },
+    "caveman": {
+      "source": {
+        "source": "github",
+        "repo": "JuliusBrussee/caveman"
+      }
+    }
+  },
+  "alwaysThinkingEnabled": false,
+  "effortLevel": "xhigh",
+  "tui": "fullscreen",
+  "skipDangerousModePermissionPrompt": true,
+  "theme": "dark",
+  "skipAutoPermissionPrompt": true,
+  "model": "claude-5.5-opus-anthropic"
+}

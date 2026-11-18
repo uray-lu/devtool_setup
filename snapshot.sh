@@ -23,7 +23,7 @@ EOF
 fi
 
 echo "==> Snapshotting current configs"
-mkdir -p "$CFG/nvim" "$CFG/ghostty" "$CFG/fastfetch"
+mkdir -p "$CFG/nvim" "$CFG/ghostty" "$CFG/fastfetch" "$CFG/claude"
 cp "$HOME/.zshrc"                       "$CFG/zshrc"
 cp "$HOME/.gitconfig"                   "$CFG/gitconfig"
 cp "$HOME/.config/nvim/init.lua"        "$CFG/nvim/init.lua"
@@ -32,6 +32,12 @@ cp "$HOME/.config/starship.toml"        "$CFG/starship.toml"
 cp "$HOME/.config/fastfetch/config.jsonc" "$CFG/fastfetch/config.jsonc"
 cp "$HOME/.config/fastfetch/r-logo.txt" "$CFG/fastfetch/r-logo.txt"
 [[ -f "$HOME/.config/git/ignore" ]] && cp "$HOME/.config/git/ignore" "$CFG/git_global_ignore"
+cp "$HOME/.claude/statusline-command.sh" "$CFG/claude/statusline-command.sh"
+# The auth token is a secret: commit a placeholder in its place. apply-configs.sh
+# recognises the placeholder and keeps each machine's own token.
+jq --arg p "REPLACE_WITH_YOUR_TOKEN" \
+  'if .env.ANTHROPIC_AUTH_TOKEN then .env.ANTHROPIC_AUTH_TOKEN = $p else . end' \
+  "$HOME/.claude/settings.json" > "$CFG/claude/settings.json"
 
 echo "==> Regenerating Brewfile"
 brew bundle dump --file="$SCRIPT_DIR/Brewfile" --force
