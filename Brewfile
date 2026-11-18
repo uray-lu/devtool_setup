@@ -82,6 +82,8 @@ cask "font-jetbrains-mono-nerd-font"
 cask "ghostty"
 # Software for Logitech devices
 cask "logi-options+"
+# Knowledge base that works on top of a local folder of plain text Markdown files
+cask "obsidian"
 # Collaboration platform for API development
 cask "postman"
 # Control your tools with a few keystrokes
