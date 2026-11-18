@@ -1,3 +1,4 @@
+tap "hashicorp/tap"
 # Simple, modern, secure file encryption
 brew "age"
 # Official Amazon AWS command-line interface
@@ -34,6 +35,8 @@ brew "k9s"
 brew "kubernetes-cli"
 # Sophisticated file transfer program
 brew "lftp"
+# Open source relational database management system
+brew "mysql"
 # Incremental parsing library
 brew "tree-sitter"
 # Ambitious Vim-fork focused on extensibility and agility
@@ -68,6 +71,8 @@ brew "typst"
 brew "uv"
 # Blazing fast terminal file manager written in Rust, based on async I/O
 brew "yazi"
+# Terraform
+brew "hashicorp/tap/terraform", trusted: true
 # Time tracker
 cask "activitywatch"
 # Terminal-based AI coding assistant
@@ -93,7 +98,6 @@ vscode "eamodio.gitlens"
 vscode "foxundermoon.shell-format"
 vscode "golang.go"
 vscode "hashicorp.terraform"
-vscode "jakobhoeg.vscode-pokemon"
 vscode "miguelsolorio.min-theme"
 vscode "ms-azuretools.vscode-containers"
 vscode "ms-azuretools.vscode-docker"
@@ -102,6 +106,7 @@ vscode "ms-python.python"
 vscode "ms-python.vscode-pylance"
 vscode "ms-python.vscode-python-envs"
 vscode "ms-vscode.makefile-tools"
+vscode "panxiaoan.themes-falcon-vscode"
 vscode "timonwong.shellcheck"
 vscode "yzhang.markdown-all-in-one"
 go "golang.org/x/tools/cmd/goimports"
